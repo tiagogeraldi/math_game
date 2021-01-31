@@ -1,0 +1,17 @@
+h1 PLAY!
+
+h2 = game.user_one.name
+| VS
+h2 = game.user_two.name
+
+- if game.canceled
+  p This game is canceled
+  =link_to 'Back', welcomes_path
+  
+- elsif !game.user_two_ready || !game.user_one_ready
+  | Waiting for your oponent...
+  = form_for game do |f|
+    = f.hidden_field :canceled, value: true
+    = f.submit "Cancel"
+- else
+  | PLAY!!!!

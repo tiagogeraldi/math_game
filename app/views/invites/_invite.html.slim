@@ -1,0 +1,13 @@
+= turbo_frame_tag dom_id(invite) do
+  - if invite.accepted != false
+    p
+      span= invite.from.name
+      | Invited you for a game.
+
+      = form_for invite do |f|
+        = f.hidden_field :accepted, value: true
+        = f.submit "Accept"
+
+      = form_for invite do |f|
+        = f.hidden_field :accepted, value: false
+        = f.submit "Reject"

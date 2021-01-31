@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_one_id: 1
+  user_two_id: 1
+  user_one_points: 1
+  user_two_points: 1
+  round: 1
+  user_one_ready: false
+  user_two_ready: false
+
+two:
+  user_one_id: 1
+  user_two_id: 1
+  user_one_points: 1
+  user_two_points: 1
+  round: 1
+  user_one_ready: false
+  user_two_ready: false

@@ -1,0 +1,12 @@
+- return if game.canceled
+
+h3= game.id.to_s
+p #{game.user_one.name} VS #{game.user_two.name} is ready to start.
+
+= form_for game do |f|
+  = f.hidden_field :i_am_ready, value: true
+  = f.submit "Start the game"
+
+= form_for game do |f|
+  = f.hidden_field :canceled, value: true
+  = f.submit "Cancel"

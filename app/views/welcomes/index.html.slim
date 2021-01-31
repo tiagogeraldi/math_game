@@ -1,0 +1,22 @@
+h1 Math Game
+
+- if current_user
+  = button_to "Logout", current_user, method: :delete
+
+  = turbo_stream_from(current_user.id, :pending_invites)
+  #invites
+    = render @invites
+
+  = turbo_stream_from(current_user.id, :pending_game)
+  #games
+    - @games.each do |game|
+      = render 'games/pending_game', game: game
+
+- else
+  = simple_form_for User.new do |f|
+    = f.input :name, label: "What's your name?"
+    = f.submit "Create"
+
+= turbo_stream_from "users"
+= turbo_frame_tag "users" do
+  = render @users

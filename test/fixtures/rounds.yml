@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  game: one
+  user_one_answer: 1.5
+  user_two_answer: 1.5
+  description: MyString
+  correct_answer: 1.5
+
+two:
+  game: two
+  user_one_answer: 1.5
+  user_two_answer: 1.5
+  description: MyString
+  correct_answer: 1.5
