@@ -1,22 +1,25 @@
-h1 Math Game
+.row
+  .col-6
+    .card.border-primary
+      .card-header Available players
+      .card-body
+        - if @users.blank?
+          .alert-warning No players available.
 
-- if current_user
-  = button_to "Logout", current_user, method: :delete
+        = turbo_stream_from "users"
+        = turbo_frame_tag "users" do
+          = render @users
 
-  = turbo_stream_from(current_user.id, :pending_invites)
-  #invites
-    = render @invites
+  .col-6
+    .card.border-warning
+      .card-header Invites
+      .card-body
+        = turbo_stream_from(current_user.id, :sent_invites)
+        = turbo_frame_tag "invites" do
+          - current_user.sent_invites.each do |invite|
+            = render "/invites/sent_invite", invite: invite
 
-  = turbo_stream_from(current_user.id, :pending_game)
-  #games
-    - @games.each do |game|
-      = render 'games/pending_game', game: game
-
-- else
-  = simple_form_for User.new do |f|
-    = f.input :name, label: "What's your name?"
-    = f.submit "Create"
-
-= turbo_stream_from "users"
-= turbo_frame_tag "users" do
-  = render @users
+        = turbo_stream_from(current_user.id, :received_invites)
+        = turbo_frame_tag "invites" do
+          - current_user.received_invites.not_answered.each do |invite|
+            = render "/invites/received_invite", invite: invite

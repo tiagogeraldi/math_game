@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_30_181301) do
+ActiveRecord::Schema.define(version: 2021_02_08_190155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,12 +20,13 @@ ActiveRecord::Schema.define(version: 2021_01_30_181301) do
     t.integer "user_two_id"
     t.integer "user_one_points", default: 0
     t.integer "user_two_points", default: 0
-    t.integer "round"
     t.boolean "user_one_ready", default: false
     t.boolean "user_two_ready", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "canceled", default: false
+    t.bigint "invite_id"
+    t.index ["invite_id"], name: "index_games_on_invite_id"
     t.index ["user_one_id"], name: "index_games_on_user_one_id"
     t.index ["user_two_id"], name: "index_games_on_user_two_id"
   end
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(version: 2021_01_30_181301) do
     t.float "correct_answer"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "current", default: false
     t.index ["game_id"], name: "index_rounds_on_game_id"
   end
 
@@ -58,6 +60,7 @@ ActiveRecord::Schema.define(version: 2021_01_30_181301) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "games", "invites"
   add_foreign_key "games", "users", column: "user_one_id"
   add_foreign_key "games", "users", column: "user_two_id"
   add_foreign_key "invites", "users", column: "from_id"

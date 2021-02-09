@@ -1,0 +1,13 @@
+.alert.alert-success
+  strong= game.user_one.name
+  |  VS
+  strong.m-1= game.user_two.name
+  |  is ready to start.
+
+  .btn-group.mt-1
+    = form_for game do |f|
+      = f.hidden_field :i_am_ready, value: true
+      = f.submit "Start the game", class: 'btn btn-sm btn-success'
+
+    = button_to "Cancel", game.invite,
+          class: "btn btn-sm btn-danger", method: :delete

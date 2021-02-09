@@ -8,29 +8,36 @@ class InvitesController < ApplicationController
     )
     invite.save!
 
+    flash[:notice] = "Invitation sent"
     redirect_to welcomes_path
   end
 
-  # Accept invitation and start game
+  # Accept invitation and create game
   def update
     @invite = Invite.find(params[:id])
     Invite.transaction do
       @invite.update!(permitted_params)
-      
+
       if @invite.accepted
         if @invite.from.playing
           flash[:error] = "#{@invite.from.name} already started another game. Game cancelled."
         else
-          #current_user.update!(playing: true)
-          game = Game.create!(
+          current_user.update!(playing: true)
+          @invite.game = Game.new(
             user_one: @invite.from,
             user_two: @invite.to,
-            user_two_ready: true,
           )
+          @invite.game.create_rounds!
         end
-      end    
+      end
       redirect_to welcomes_path
     end
+  end
+
+  def destroy
+    @invite = Invite.find(params[:id])
+    @invite.destroy!
+    redirect_to welcomes_path
   end
 
   private

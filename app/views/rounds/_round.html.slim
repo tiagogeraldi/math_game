@@ -1,0 +1,29 @@
+= turbo_frame_tag round do
+  - if round.current && round.game.running?
+    h3= round.description
+
+    h4= round.user_one_answer
+    h4= round.user_two_answer
+
+    - if round.answer
+      - if round.winner
+        p
+          | #{round.winner.name} answered correctly
+        p= round.answer
+      - else
+        p
+          | #{round.erring.name} answered wrongly
+        p= round.answer
+        p
+          | Correct answer #{round.correct_answer}
+
+      - if round.next
+        = form_for [round.game, round.next] do |f|
+          = f.hidden_field :current, value: true
+          = f.submit "Next"
+
+
+    - else
+      = form_for [round.game, round] do |f|
+        = f.text_field :guess
+        = f.submit "OK"

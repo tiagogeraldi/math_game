@@ -1,0 +1,13 @@
+= turbo_frame_tag dom_id(invite) do
+  - if invite.game
+    = render "/invites/game", game: invite.game
+  - else
+    - if invite.accepted == false
+      .alert.alert-warning.d-flex
+        | Invite refused
+        = button_to "X", invite,
+          class: "btn btn-sm btn-danger", method: :delete
+    - else
+      .alert.alert-warning
+        | You has invited
+        strong.m-1= invite.to.name

@@ -10,9 +10,12 @@ class GamesController < ApplicationController
       set_ready
       @game.save!
       if @game.canceled
+        @game.user_one.update!(playing: false)
+        @game.user_two.update!(playing: false)
         redirect_to welcomes_path
       else
-        #current_user.update!(playing: true)
+        current_user.update!(playing: true)
+        @game.rounds.first.update!(current: true)
         redirect_to @game
       end
     end

@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  def new
+  end
+
   def create
     user = User.create!(permitted_params)
     session[:user_id] = user.id
@@ -8,8 +11,8 @@ class UsersController < ApplicationController
 
   def destroy
     user = User.find(params[:id])
-    user.destroy!
     session[:user_id] = nil
+    user.destroy!
     redirect_to welcomes_path
   end
 

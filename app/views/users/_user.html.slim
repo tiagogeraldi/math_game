@@ -1,7 +1,8 @@
 = turbo_frame_tag dom_id(user) do
-  p
+  - if user != current_user
     = user.name
-    - if user != current_user
+    .text-end
       = form_for Invite.new do |f|
         = f.hidden_field :to_id, value: user.id.to_s
-        = f.submit 'Invite', data: { confirm: "Do you want to invite #{user.name} for a game?" }
+        = f.submit 'Invite for a game!',
+          class: 'btn btn-primary btn-sm'

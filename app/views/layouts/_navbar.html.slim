@@ -1,0 +1,11 @@
+nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  .container-fluid
+    a.navbar-brand href="#"  Math Game
+    ul.navbar-nav.me-auto.mb-2.mb-lg-0
+      li.nav-item
+        = link_to 'Home', root_path, class: 'nav-link'
+    .d-flex
+      = yield :navbar_links
+    - if current_user
+      d.flex
+        = button_to "Logout", current_user, method: :delete, class: 'btn btn-secondary'

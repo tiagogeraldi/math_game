@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    title MathGame
+    meta content="width=device-width,initial-scale=1" name="viewport" /
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all'
+    = stimulus_include_tags
+    = javascript_include_tag "turbo", type: "module-shim"
+    = yield :head
+  body
+    = render '/layouts/navbar'
+    .container
+      = render '/layouts/flashes'
+
+      .mt-4= yield

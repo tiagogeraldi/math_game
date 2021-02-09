@@ -1,0 +1,16 @@
+= turbo_frame_tag dom_id(invite) do
+  - if invite.game
+    = render "/invites/game", game: invite.game
+  - elsif invite.accepted.nil?
+    .alert.alert-warning
+      strong= invite.from.name
+      |  has invited you for a game.
+
+      .btn-group.m-1
+        = form_for invite do |f|
+          = f.hidden_field :accepted, value: true
+          = f.submit "Accept", class: "btn btn-sm btn-success"
+
+        = form_for invite do |f|
+          = f.hidden_field :accepted, value: false
+          = f.submit "Reject", class: "btn btn-sm btn-danger"

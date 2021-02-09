@@ -1,0 +1,8 @@
+.row.justify-content-center
+  .col-md-4
+    .card.mt-5
+      .card-body.text-center
+        h3 What's your name?
+        = simple_form_for User.new do |f|
+          = f.input :name, label: false
+          = f.submit "Sign in", class: 'btn btn-lg btn-primary mt-1'
