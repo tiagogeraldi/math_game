@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_08_190155) do
+ActiveRecord::Schema.define(version: 2021_02_09_130351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,8 +20,6 @@ ActiveRecord::Schema.define(version: 2021_02_08_190155) do
     t.integer "user_two_id"
     t.integer "user_one_points", default: 0
     t.integer "user_two_points", default: 0
-    t.boolean "user_one_ready", default: false
-    t.boolean "user_two_ready", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "canceled", default: false
@@ -37,6 +35,8 @@ ActiveRecord::Schema.define(version: 2021_02_08_190155) do
     t.boolean "accepted"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "from_ready"
+    t.boolean "to_ready"
     t.index ["from_id"], name: "index_invites_on_from_id"
     t.index ["to_id"], name: "index_invites_on_to_id"
   end

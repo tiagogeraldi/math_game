@@ -4,8 +4,6 @@ class Game < ApplicationRecord
   belongs_to :invite
   has_many :rounds, dependent: :destroy
 
-  attr_accessor :i_am_ready
-
   after_update_commit do
     broadcast_replace
   end
@@ -18,10 +16,6 @@ class Game < ApplicationRecord
         correct_answer: eval(equation)
       )
     end
-  end
-
-  def running?
-    user_one_ready && user_two_ready
   end
 
   def update_points(round)

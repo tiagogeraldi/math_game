@@ -1,8 +1,13 @@
 = turbo_frame_tag dom_id(user) do
-  - if user != current_user
-    = user.name
-    .text-end
-      = form_for Invite.new do |f|
-        = f.hidden_field :to_id, value: user.id.to_s
-        = f.submit 'Invite for a game!',
-          class: 'btn btn-primary btn-sm'
+    li.list-group-item.d-flex.justify-content-between.align-items-center
+      = user.name
+      - if user.playing
+        .end-text Playing!
+      - elsif user == current_user
+        .end-text You!
+      - else
+        .end-text
+          = form_for Invite.new do |f|
+            = f.hidden_field :to_id, value: user.id.to_s
+            = f.submit 'Invite for a game!',
+              class: 'btn btn-primary btn-sm'

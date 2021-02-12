@@ -1,0 +1,10 @@
+= turbo_frame_tag invite do
+  - if invite.accepted == false
+    .alert.alert-warning.d-flex.justify-content-between
+      span Invite refused
+      = button_to "X", invite,
+        class: "btn btn-sm btn-secondary", method: :delete
+  - else
+    .alert.alert-warning
+      | You have invited
+      strong.m-1= invite.to.name

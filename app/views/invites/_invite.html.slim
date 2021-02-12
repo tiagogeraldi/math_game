@@ -1,0 +1,6 @@
+- if invite.accepted
+  = render "/invites/game", invite: invite
+- elsif invite.from == current_user
+  = render "/invites/sent", invite: invite
+- else
+  = render "/invites/received", invite: invite

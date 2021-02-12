@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def new
+    redirect_to welcomes_path if current_user
   end
 
   def create

@@ -1,13 +1,21 @@
-.alert.alert-success
-  strong= game.user_one.name
-  |  VS
-  strong.m-1= game.user_two.name
-  |  is ready to start.
+- if invite.ready?
+  = link_to 'Start the game', invite.game, class: 'btn btn-sm btn-primary'
+- else
+  = turbo_frame_tag invite do
+    p
+      strong= invite.from.name
+      |  VS
+      strong.m-1= invite.to.name
+      | is ready to start.
+    .btn-group.mt-1
+      = form_for invite do |f|
+        = f.hidden_field :i_am_ready, value: true
+        - if invite.am_i_ready?(current_user)
+          p Wait for your oponent...
+        - else
+          = f.submit "I'm ready", class: 'btn btn-sm btn-success',
+            data: { action: "click->welcomes#wait", welcomes_target: "ready" }
+          div data-welcomes-target="message"
 
-  .btn-group.mt-1
-    = form_for game do |f|
-      = f.hidden_field :i_am_ready, value: true
-      = f.submit "Start the game", class: 'btn btn-sm btn-success'
-
-    = button_to "Cancel", game.invite,
-          class: "btn btn-sm btn-danger", method: :delete
+      = button_to "Cancel", invite,
+            class: "btn btn-sm btn-danger", method: :delete

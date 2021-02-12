@@ -1,7 +1,5 @@
-= turbo_frame_tag dom_id(invite) do
-  - if invite.game
-    = render "/invites/game", game: invite.game
-  - elsif invite.accepted.nil?
+= turbo_frame_tag invite do
+  - if invite.accepted.nil?
     .alert.alert-warning
       strong= invite.from.name
       |  has invited you for a game.

@@ -4,45 +4,66 @@ class InvitesController < ApplicationController
       permitted_params.merge(
         from: current_user,
         accepted: nil,
+        )
       )
-    )
     invite.save!
 
-    flash[:notice] = "Invitation sent"
     redirect_to welcomes_path
   end
 
-  # Accept invitation and create game
   def update
     @invite = Invite.find(params[:id])
     Invite.transaction do
-      @invite.update!(permitted_params)
-
-      if @invite.accepted
-        if @invite.from.playing
-          flash[:error] = "#{@invite.from.name} already started another game. Game cancelled."
-        else
-          current_user.update!(playing: true)
-          @invite.game = Game.new(
-            user_one: @invite.from,
-            user_two: @invite.to,
-          )
-          @invite.game.create_rounds!
+      @invite.assign_attributes(permitted_params)
+      set_ready
+      @invite.save!
+      if @invite.ready?
+        create_game
+        redirect_to @invite.game
+      else
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace(@invite)
+          end
         end
       end
-      redirect_to welcomes_path
     end
   end
 
   def destroy
     @invite = Invite.find(params[:id])
     @invite.destroy!
-    redirect_to welcomes_path
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.remove(@invite)
+      end
+    end
   end
 
   private
 
+  def create_game
+    game = Game.create!(
+      invite: @invite,
+      user_one: @invite.from,
+      user_two: @invite.to,
+    )
+    game.create_rounds!
+    game.rounds.first.update!(current: true)
+    @invite.from.update!(playing: true)
+    @invite.to.update!(playing: true)
+  end
+
+  def set_ready
+    return unless @invite.i_am_ready
+    if current_user == @invite.from
+      @invite.from_ready = true
+    else
+      @invite.to_ready = true
+    end
+  end
+
   def permitted_params
-    params.require(:invite).permit(:to_id, :accepted)
+    params.require(:invite).permit(:to_id, :accepted, :i_am_ready)
   end
 end
