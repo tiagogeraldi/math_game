@@ -5,32 +5,13 @@
     .alert.alert-success
       h1= round.description
 
-    h4= round.user_one_answer
-    h4= round.user_two_answer
-
     - if round.answer
-      - if round.winner
-        .alert.alert-success
-          | #{round.winner.name} answered correctly
-          h2= round.answer
-      - else
-        .alert.alert-danger
-          | #{round.erring.name} answered wrongly
-          h2= round.answer
-          p
-            | Correct answer:
-            h3= round.correct_answer
+      = render "/rounds/answer", round: round
 
       - if round.next
         = form_for [round.game, round.next] do |f|
           = f.hidden_field :current, value: true
           = f.submit "Next", class: "btn btn-primary btn-lg"
-      - else
-        = content_for :footer do
-          .text-center
-            = link_to "Continue", round.game, class: "btn btn-primary btn-lg"
 
     - else
-      = form_for [round.game, round] do |f|
-        = f.text_field :guess
-        = f.submit "OK", class: "btn btn-primary btn-lg"
+      = render "/rounds/alternatives", round: round

@@ -1,4 +1,4 @@
-- if invite.game && invite.game.canceled
+- if invite.game && (invite.game.canceled || invite.game.finished)
   - return
 
 - if invite.accepted

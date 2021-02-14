@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_14_144417) do
+ActiveRecord::Schema.define(version: 2021_02_14_153000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2021_02_14_144417) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "canceled", default: false
     t.integer "invite_id"
+    t.boolean "finished", default: false
     t.index ["invite_id"], name: "index_games_on_invite_id"
     t.index ["user_one_id"], name: "index_games_on_user_one_id"
     t.index ["user_two_id"], name: "index_games_on_user_two_id"
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 2021_02_14_144417) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "current", default: false
+    t.integer "alternatives", default: [], array: true
     t.index ["game_id"], name: "index_rounds_on_game_id"
   end
 

@@ -18,7 +18,7 @@ class InvitesController < ApplicationController
       set_ready
       @invite.save!
       if @invite.ready?
-        create_game
+        GameGenerator.new(@invite).run! unless @invite.game
         redirect_to @invite.game
       else
         respond_to do |format|
@@ -41,18 +41,6 @@ class InvitesController < ApplicationController
   end
 
   private
-
-  def create_game
-    game = Game.create!(
-      invite: @invite,
-      user_one: @invite.from,
-      user_two: @invite.to,
-    )
-    game.create_rounds!
-    game.rounds.first.update!(current: true)
-    @invite.from.update!(playing: true)
-    @invite.to.update!(playing: true)
-  end
 
   def set_ready
     return unless @invite.i_am_ready

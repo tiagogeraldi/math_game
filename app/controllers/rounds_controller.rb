@@ -16,8 +16,7 @@ class RoundsController < ApplicationController
 
       if @round.save
         if answered
-          @game.update_points(@round)
-          @game.save!
+          @game.update_points!(@round)
           if @game.is_over?
             @game.user_one.update!(playing: false)
             @game.user_two.update!(playing: false)

@@ -1,0 +1,11 @@
+- if round.winner
+  .alert.alert-success
+    | #{round.winner.name} answered correctly
+    h2= round.answer.to_i
+- else
+  .alert.alert-danger
+    | #{round.erring.name} answered wrongly
+    h2= round.answer.to_i
+    p
+      | Correct answer:
+      h3= round.correct_answer.to_i

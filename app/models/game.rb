@@ -8,17 +8,7 @@ class Game < ApplicationRecord
     broadcast_replace
   end
 
-  def create_rounds!
-    5.times do
-      equation = random_equation
-      rounds << Round.new(
-        description: equation,
-        correct_answer: eval(equation)
-      )
-    end
-  end
-
-  def update_points(round)
+  def update_points!(round)
     if round.winner
       if round.winner == user_one
         self.user_one_points += 1
@@ -32,14 +22,22 @@ class Game < ApplicationRecord
         self.user_one_points += 1
       end
     end
+    if round == last_round
+      self.finished = true
+    end
+    save!
   end
 
   def current_round
-    @current_round ||= rounds.order(:id).find_by(current: true)
+    @current_round ||= rounds.find_by(current: true)
   end
 
   def is_over?
-    current_round == rounds.order(:id).last && current_round.done?
+    current_round == last_round && current_round.done?
+  end
+
+  def last_round
+    rounds.order(:id).last
   end
 
   def winner
@@ -48,29 +46,5 @@ class Game < ApplicationRecord
     else
       user_two
     end
-  end
-
-  private
-
-  def random_equation
-    numbers = elements
-    numbers.map.with_index do |el, idx|
-      "#{el} #{operator if idx < (numbers.size - 1)} "
-    end.join
-  end
-
-  # The equations are randomically generated.
-  # They have between 2 to 6 elements and the numbers
-  # can be 1 to 15
-  def elements
-    list = []
-    rand(2..6).times do
-      list << rand(1..15)
-    end
-    list
-  end
-
-  def operator
-    ['+', '-', '/', '*'].sample
   end
 end

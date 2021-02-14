@@ -1,0 +1,7 @@
+h5 Choose your answer
+.row
+  - round.alternatives.shuffle.each do |alternative|
+    .col-3
+      = form_for [round.game, round] do |f|
+        = f.hidden_field :guess, value: alternative
+        = f.submit alternative, class: "btn btn-outline-dark btn-lg "

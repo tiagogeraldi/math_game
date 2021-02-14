@@ -7,27 +7,15 @@
         = f.hidden_field :canceled, value: true
         = f.submit "Leave the game", class: 'btn btn-danger'
 
-  .row
-    .col-6
-      .card.text-center.bg-primary.text-white.p-3
-        h2.card-title= game.user_one.name
-        .card-body
-          h1= game.user_one_points
-          | Points
-    .col-6
-      .card.text-center.bg-secondary.text-white.p-3
-        h2.card-title= game.user_two.name
-        .card-body
-          h1= game.user_two_points
-          | Points
+  = render "/games/scoreboard", game: game
 
   - if game.canceled
     .alert.alert-warning.mt-4
       | Game canceled
   - elsif game.is_over?
     = render "/games/over", game: game
-  - else
-    .row.mt-5
-      .col-12
-        = render "/rounds/round", round: game.current_round
+
+  .row.mt-5
+    .col-12
+      = render "/rounds/round", round: game.current_round
 

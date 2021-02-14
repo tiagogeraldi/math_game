@@ -1,0 +1,13 @@
+.row
+  .col-6
+    .card.text-center.bg-primary.text-white.p-3
+      h2.card-title= game.user_one.name
+      .card-body
+        h1= game.user_one_points
+        | Points
+  .col-6
+    .card.text-center.bg-secondary.text-white.p-3
+      h2.card-title= game.user_two.name
+      .card-body
+        h1= game.user_two_points
+        | Points
