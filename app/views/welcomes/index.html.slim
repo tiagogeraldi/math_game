@@ -1,5 +1,12 @@
 .row
-  .col-6
+  .col-md-6.col-sm-12.mt-2
+    .card.border-warning
+      .card-header Invites
+      .card-body
+        = turbo_stream_from(current_user.id, :invites)
+        #invites
+          = render current_user.invites
+  .col-md-6.col-sm-12.mt-2
     .card.border-primary
       .card-header Available players
       .card-body
@@ -10,11 +17,3 @@
           = turbo_stream_from "users"
           = turbo_frame_tag "users" do
             = render @users
-
-  .col-6
-    .card.border-warning
-      .card-header Invites
-      .card-body
-        = turbo_stream_from(current_user.id, :invites)
-        #invites
-          = render current_user.invites
