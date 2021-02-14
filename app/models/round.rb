@@ -25,8 +25,16 @@ class Round < ApplicationRecord
     end
   end
 
+  def done?
+    winner || erring
+  end
+
   def next
     game.rounds.where("id > ?", id).first
+  end
+
+  def index
+    game.rounds.order(:id).index(self)
   end
 
   private

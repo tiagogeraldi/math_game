@@ -1,7 +1,7 @@
 class Game < ApplicationRecord
-  belongs_to :user_one, class_name: "User"
-  belongs_to :user_two, class_name: "User"
-  belongs_to :invite
+  belongs_to :user_one, class_name: "User", optional: true
+  belongs_to :user_two, class_name: "User", optional: true
+  belongs_to :invite, optional: true
   has_many :rounds, dependent: :destroy
 
   after_update_commit do
@@ -34,6 +34,22 @@ class Game < ApplicationRecord
     end
   end
 
+  def current_round
+    @current_round ||= rounds.order(:id).find_by(current: true)
+  end
+
+  def is_over?
+    current_round == rounds.order(:id).last && current_round.done?
+  end
+
+  def winner
+    if user_one_points > user_two_points
+      user_one
+    else
+      user_two
+    end
+  end
+
   private
 
   def random_equation
@@ -43,10 +59,13 @@ class Game < ApplicationRecord
     end.join
   end
 
+  # The equations are randomically generated.
+  # They have between 2 to 6 elements and the numbers
+  # can be 1 to 15
   def elements
     list = []
-    rand(2..10).times do
-      list << rand(1..30)
+    rand(2..6).times do
+      list << rand(1..15)
     end
     list
   end

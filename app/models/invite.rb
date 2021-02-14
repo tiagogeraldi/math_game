@@ -1,7 +1,7 @@
 class Invite < ApplicationRecord
   belongs_to :from, class_name: 'User'
   belongs_to :to, class_name: 'User'
-  has_one :game, dependent: :destroy
+  has_one :game, dependent: :nullify
 
   after_create_commit do
     broadcast_prepend_to to_id, :invites, partial: "/invites/received"

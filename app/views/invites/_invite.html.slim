@@ -1,3 +1,6 @@
+- if invite.game && invite.game.canceled
+  - return
+
 - if invite.accepted
   = render "/invites/game", invite: invite
 - elsif invite.from == current_user

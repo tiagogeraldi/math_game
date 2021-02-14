@@ -1,29 +1,36 @@
-= turbo_frame_tag round do
-  - if round.current
-    h3= round.description
+.card
+  .card-body.p-3.text-center
+    h4.card-title= "Round #{round.index + 1}"
+
+    .alert.alert-success
+      h1= round.description
 
     h4= round.user_one_answer
     h4= round.user_two_answer
 
     - if round.answer
       - if round.winner
-        p
+        .alert.alert-success
           | #{round.winner.name} answered correctly
-        p= round.answer
+          h2= round.answer
       - else
-        p
+        .alert.alert-danger
           | #{round.erring.name} answered wrongly
-        p= round.answer
-        p
-          | Correct answer #{round.correct_answer}
+          h2= round.answer
+          p
+            | Correct answer:
+            h3= round.correct_answer
 
       - if round.next
         = form_for [round.game, round.next] do |f|
           = f.hidden_field :current, value: true
-          = f.submit "Next"
-
+          = f.submit "Next", class: "btn btn-primary btn-lg"
+      - else
+        = content_for :footer do
+          .text-center
+            = link_to "Continue", round.game, class: "btn btn-primary btn-lg"
 
     - else
       = form_for [round.game, round] do |f|
         = f.text_field :guess
-        = f.submit "OK"
+        = f.submit "OK", class: "btn btn-primary btn-lg"

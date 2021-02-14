@@ -11,18 +11,31 @@ class RoundsController < ApplicationController
     end
 
     Round.transaction do
-      current_changed = @round.current_changed?
+      next_round = @round.current_changed?
+      answered = @round.user_one_answer_changed? || @round.user_two_answer_changed?
+
       if @round.save
-        @game.update_points(@round)
-        @game.save!
-        if current_changed
+        if answered
+          @game.update_points(@round)
+          @game.save!
+          if @game.is_over?
+            @game.user_one.update!(playing: false)
+            @game.user_two.update!(playing: false)
+          end
+        end
+        if next_round
           @game.rounds.where.not(id: @round.id).update_all(current: false)
+          @game.touch(:updated_at) # force re-broadcast
         end
       else
         flash[:error] = @round.errors.full_messages.join('. ')
       end
     end
-    redirect_to @game
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(@round.game)
+      end
+    end
   end
 
   private
