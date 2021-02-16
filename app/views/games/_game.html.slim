@@ -17,5 +17,5 @@
 
   .row.mt-5
     .col-12
-      = render "/rounds/round", round: game.current_round
+      = render "/rounds/round", round: game.current_round if game.current_round
 

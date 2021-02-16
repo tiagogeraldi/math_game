@@ -16,6 +16,6 @@ class User < ApplicationRecord
   def invites
     Invite.left_outer_joins(:game).
       where("from_id = :id OR to_id = :id", id: id).
-      where(game: { canceled: false, finished: false })
+      where(game: { canceled: [false, nil], finished: [false, nil] })
   end
 end

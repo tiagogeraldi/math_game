@@ -37,7 +37,7 @@ class Game < ApplicationRecord
   end
 
   def is_over?
-    current_round == last_round && current_round.done?
+    current_round == last_round && current_round.done? if current_round
   end
 
   def last_round
