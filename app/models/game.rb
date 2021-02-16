@@ -25,6 +25,10 @@ class Game < ApplicationRecord
     if round == last_round
       self.finished = true
     end
+    if is_over?
+      user_one.update!(playing: false)
+      user_two.update!(playing: false)
+    end
     save!
   end
 
