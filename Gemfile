@@ -50,6 +50,7 @@ group :test do
   gem "shoulda-matchers"
   gem "factory_bot"
   gem "faker"
+  gem "action-cable-testing"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -66,6 +66,8 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
   config.include Helpers::Authentication, type: :request
+
+  config.include ActionCable::TestHelper
 end
 
 Shoulda::Matchers.configure do |config|

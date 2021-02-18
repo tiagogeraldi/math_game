@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    action-cable-testing (0.6.1)
+      actioncable (>= 5.0)
     actioncable (6.1.1)
       actionpack (= 6.1.1)
       activesupport (= 6.1.1)
@@ -210,6 +212,7 @@ PLATFORMS
   x86_64-darwin-19
 
 DEPENDENCIES
+  action-cable-testing
   awesome_print (~> 1.8)
   bootsnap (>= 1.4.4)
   byebug

@@ -23,6 +23,9 @@ RSpec.describe "Invites", type: :request do
       expect(invite.from.name).to eq "John"
       expect(invite.to).to eq peter
       expect(response).to have_http_status(302)
+
+      assert_broadcasts("#{peter.id}:invites", 1)
+      assert_broadcasts("#{john.id}:invites", 1)
     end
 
     it "does not duplicate a not answered invite" do
@@ -51,6 +54,9 @@ RSpec.describe "Invites", type: :request do
       }
       expect(invite.reload.accepted).to eq true
       expect(response.body).to include "turbo-stream"
+
+      assert_broadcasts("#{peter.id}:invites", 2)
+      assert_broadcasts("#{john.id}:invites", 2)
     end
 
     it "invited user sets I am ready" do
@@ -95,6 +101,9 @@ RSpec.describe "Invites", type: :request do
 
       expect { invite.reload }.to raise_error(ActiveRecord::RecordNotFound)
       expect(response.body).to include "turbo-stream"
+
+      assert_broadcasts("#{peter.id}:invites", 2)
+      assert_broadcasts("#{john.id}:invites", 2)
     end
   end
 end

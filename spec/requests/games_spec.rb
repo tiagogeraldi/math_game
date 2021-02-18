@@ -18,10 +18,9 @@ RSpec.describe "Games", type: :request do
 
   describe "PUT /games/id" do
     it "cancels a game" do
-      put game_path(game), params: {
+      put game_path(game), as: :turbo_stream, params: {
         game: { canceled: true }
       }
-
       expect(game.reload.canceled).to eq true
       expect(response).to have_http_status(200)
     end

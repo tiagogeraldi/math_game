@@ -13,6 +13,7 @@ RSpec.describe "Users", type: :request do
     it "signs in" do
       post users_path, params: { user: { name: name } }
       expect(response).to have_http_status(302)
+      assert_broadcasts('users', 1)
     end
   end
 
@@ -23,6 +24,7 @@ RSpec.describe "Users", type: :request do
 
       expect(response).to have_http_status(302)
       expect { user.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      assert_broadcasts('users', 2)
     end
   end
 end

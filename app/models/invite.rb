@@ -14,7 +14,8 @@ class Invite < ApplicationRecord
   end
 
   after_destroy_commit do
-    broadcast_remove
+    broadcast_remove_to to_id, :invites
+    broadcast_remove_to from_id, :invites
   end
 
   attr_accessor :i_am_ready
