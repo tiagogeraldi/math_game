@@ -9,9 +9,7 @@
       = render "/rounds/answer", round: round
 
       - if round.next
-        = form_for [round.game, round.next] do |f|
-          = f.hidden_field :current, value: true
-          = f.submit "Next", class: "btn btn-primary btn-lg"
+        = link_to "Next", [round.game, round.next], class: "btn btn-primary btn-lg"
 
     - else
       = render "/rounds/alternatives", round: round

@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_before_action :authenticate!
+
   def new
     redirect_to welcomes_path if current_user
   end

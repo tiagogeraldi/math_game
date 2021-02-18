@@ -7,16 +7,26 @@ class RoundsController < ApplicationController
     assign_answer_attributes
 
     Round.transaction do
-      next_round = @round.current_changed?
-      answered = @round.user_one_answer_changed? || @round.user_two_answer_changed?
-
       @round.save!
-      if answered
-        @game.update_points!(@round)
-      elsif next_round
-        @game.rounds.where.not(id: @round.id).update_all(current: false)
-        @game.touch(:updated_at) # force re-broadcast
+      @game.update_points!(@round)
+    end
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(@round.game)
       end
+    end
+  end
+
+  # Next round
+  def show
+    @game = Game.find(params[:game_id])
+    @round = @game.rounds.find(params[:id])
+
+    Round.transaction do
+      @round.update!(current: true)
+      @game.rounds.where.not(id: @round.id).update_all(current: false)
+      @game.touch(:updated_at) # force re-broadcast
     end
 
     respond_to do |format|
@@ -29,7 +39,7 @@ class RoundsController < ApplicationController
   private
 
   def permitted_params
-    params.require(:round).permit(:guess, :current)
+    params.require(:round).permit(:guess)
   end
 
   def assign_answer_attributes
