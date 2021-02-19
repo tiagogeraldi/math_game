@@ -1,6 +1,6 @@
 class Game < ApplicationRecord
-  belongs_to :user_one, class_name: "User", optional: true
-  belongs_to :user_two, class_name: "User", optional: true
+  belongs_to :user_one, class_name: 'User', optional: true
+  belongs_to :user_two, class_name: 'User', optional: true
   belongs_to :invite, optional: true
   has_many :rounds, dependent: :destroy
 
@@ -15,16 +15,12 @@ class Game < ApplicationRecord
       else
         self.user_two_points += 1
       end
+    elsif round.erring == user_one
+      self.user_two_points += 1
     else
-      if round.erring == user_one
-        self.user_two_points += 1
-      else
-        self.user_one_points += 1
-      end
+      self.user_one_points += 1
     end
-    if round == last_round
-      self.finished = true
-    end
+    self.finished = true if round == last_round
     if is_over?
       user_one.update!(playing: false)
       user_two.update!(playing: false)

@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe "Games", type: :request do
+RSpec.describe 'Games', type: :request do
   let(:game) { create :game }
 
   before do
-    sign_in "John"
+    sign_in 'John'
   end
 
-  describe "GET /games/id" do
-    it "displays a game" do
+  describe 'GET /games/id' do
+    it 'displays a game' do
       get game_path(game)
 
       expect(response).to have_http_status(200)
@@ -16,8 +16,8 @@ RSpec.describe "Games", type: :request do
     end
   end
 
-  describe "PUT /games/id" do
-    it "cancels a game" do
+  describe 'PUT /games/id' do
+    it 'cancels a game' do
       put game_path(game), as: :turbo_stream, params: {
         game: { canceled: true }
       }

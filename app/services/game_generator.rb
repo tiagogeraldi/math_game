@@ -27,7 +27,7 @@ class GameGenerator
     @game = Game.create!(
       invite: invite,
       user_one: invite.from,
-      user_two: invite.to,
+      user_two: invite.to
     )
   end
 

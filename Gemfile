@@ -21,17 +21,18 @@ gem 'redis', '~> 4.0'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
+gem 'hotwire-rails'
 gem 'simple_form'
 gem 'slim'
-gem 'hotwire-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem "awesome_print", "~> 1.8"
+  gem 'awesome_print', '~> 1.8'
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'rubocop', require: false
 end
 
 group :development do
@@ -46,12 +47,12 @@ group :development do
 end
 
 group :test do
-  gem "rspec-rails"
-  gem "shoulda-matchers"
-  gem "factory_bot"
-  gem "faker"
-  gem "action-cable-testing"
+  gem 'action-cable-testing'
+  gem 'factory_bot'
+  gem 'faker'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

@@ -30,7 +30,7 @@ class Round < ApplicationRecord
   end
 
   def next
-    game.rounds.where("id > ?", id).first
+    game.rounds.where('id > ?', id).first
   end
 
   def index

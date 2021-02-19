@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe GameGenerator do
   let(:invite) { create(:invite) }
 
-  describe "#run!" do
-    it "creates a game" do
+  describe '#run!' do
+    it 'creates a game' do
       expect do
         described_class.new(invite).run!
       end.to change { Game.count }.by(1)
@@ -15,7 +15,7 @@ RSpec.describe GameGenerator do
       expect(game.invite).to eq invite
     end
 
-    it "creates rounds" do
+    it 'creates rounds' do
       expect do
         described_class.new(invite).run!
       end.to change { Round.count }.by(5)

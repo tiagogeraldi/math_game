@@ -3,9 +3,9 @@ class InvitesController < ApplicationController
     invite = Invite.find_or_initialize_by(
       permitted_params.merge(
         from: current_user,
-        accepted: nil,
-        )
+        accepted: nil
       )
+    )
     invite.save!
 
     redirect_to welcomes_path
@@ -44,6 +44,7 @@ class InvitesController < ApplicationController
 
   def set_ready
     return unless @invite.i_am_ready
+
     if current_user == @invite.from
       @invite.from_ready = true
     else

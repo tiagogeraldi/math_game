@@ -4,8 +4,8 @@ class Invite < ApplicationRecord
   has_one :game, dependent: :nullify
 
   after_create_commit do
-    broadcast_prepend_to to_id, :invites, partial: "/invites/received"
-    broadcast_prepend_to from_id, :invites, partial: "/invites/sent"
+    broadcast_prepend_to to_id, :invites, partial: '/invites/received'
+    broadcast_prepend_to from_id, :invites, partial: '/invites/sent'
   end
 
   after_update_commit do
