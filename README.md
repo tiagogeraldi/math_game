@@ -2,7 +2,7 @@
 
 This an experimental game to practice the combination of Ruby on Rails + Hotwire + Turbo.
 
-Go to [https://mindmath.herokuapp.com/] to see it running. Invite a friend and play.
+Go to https://mindmath.herokuapp.com/ to see it running. Invite a friend and play.
 
 ![alt text](https://github.com/tiagogeraldi/math_game/blob/master/public/demo.png?raw=true)
 
@@ -18,7 +18,7 @@ Two players answer simple math equations in five rounds, having four alternative
 
 `bin/rails s`
 
-Then go to [http://localhost:3000]
+Then go to http://localhost:3000
 
 
 ## Tests
