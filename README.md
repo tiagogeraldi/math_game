@@ -1,24 +1,28 @@
-# README
+# Mind Math Game
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This an experimental game to practice the combination of Ruby on Rails + Hotwire + Turbo.
 
-Things you may want to cover:
+Go to [https://mindmath.herokuapp.com/] to see it running. Invite a friend and play.
 
-* Ruby version
+![alt text](https://github.com/tiagogeraldi/math_game/blob/master/public/demo.png?raw=true)
 
-* System dependencies
+## The game
 
-* Configuration
+Two players answer simple math equations in five rounds, having four alternatives in each round. The game accepts only the first answer. If the answer is correct, who answered scores one point. If it is not, the opponent scores one point. The second player can't answer the equation if the opponent already answered it.
 
-* Database creation
+## Running locally
 
-* Database initialization
+`bundle install`
 
-* How to run the test suite
+`bin/rails db:create db:migrate`
 
-* Services (job queues, cache servers, search engines, etc.)
+`bin/rails s`
 
-* Deployment instructions
+Then go to [http://localhost:3000]
 
-* ...
+
+## Tests
+
+`bin/rails rake db:migrate RAILS_ENV=test`
+
+`bin/rspec`
